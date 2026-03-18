@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Phone, MapPin, GraduationCap, Briefcase, User, Code, Smartphone, Car, Download } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import ContactForm from "@/components/contact-form";
 import RepositoriesSection from "@/components/repositories-section";
 
@@ -80,18 +81,64 @@ const Section = ({ title, icon: Icon, children, id }: { title: string; icon: Rea
     {children}
   </motion.section>
 );
-
 export default function Home() {
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const heroVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1, 
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 } 
+    }
+  };
+
+  const heroItemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };
 
   return (
     <div suppressHydrationWarning className="relative min-h-screen bg-background overflow-x-hidden">
       {/* Navigation */}
       <nav suppressHydrationWarning className="fixed top-0 left-0 right-0 z-50 pt-2 md:pt-4">
-        <div suppressHydrationWarning className="glass-card mx-2 md:mx-4 rounded-full px-2 md:px-4 py-1 md:py-2 flex items-center justify-between overflow-x-auto">
-          <a href="#" className="flex items-center gap-1 md:gap-2 text-base md:text-xl font-bold text-secondary uiverse-nav-logo flex-shrink-0">
+        <div suppressHydrationWarning className="glass-card mx-2 md:mx-4 rounded-2xl px-2 md:px-4 py-1 md:py-2 flex items-center justify-between overflow-x-auto relative">
+          
+          {/* Capybara Loader Background - Walking Left to Right */}
+          <div className="absolute inset-0 opacity-30 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+            <div className="absolute top-[65%] -translate-y-1/2" style={{ animation: 'walkTab 25s linear infinite' }}>
+              <div className="capybaraloader origin-left scale-[0.18] md:scale-[0.22]">
+              <div className="capybara">
+                <div className="capy">
+                  <div className="capyhead">
+                    <div className="capyear">
+                      <div className="capyear2"></div>
+                    </div>
+                    <div className="capyear">
+                      <div className="capyear2"></div>
+                    </div>
+                    <div className="capyeye"></div>
+                    <div className="capyeye"></div>
+                    <div className="capymouth">
+                      <div className="capylips"></div>
+                      <div className="capylips"></div>
+                    </div>
+                  </div>
+                  <div className="capyleg"></div>
+                  <div className="capyleg2"></div>
+                  <div className="capyleg2"></div>
+                  <div className="capyleg2"></div>
+                </div>
+              </div>
+              <div className="loader">
+                <div className="loaderline"></div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <a href="#" className="flex items-center gap-1 md:gap-2 text-base md:text-xl font-bold text-secondary uiverse-nav-logo flex-shrink-0 relative z-10">
             <span className="eye-icon">
               <div className="up"></div>
               <div className="down"></div>
@@ -108,8 +155,10 @@ export default function Home() {
               { name: "ติดต่อ", id: "contact" }
             ].map((item) => (
               <li key={item.id} className="uiverse-nav-item flex-shrink-0">
-                <a href={`#${item.id}`}>
-                  <span>{item.name}</span>
+                <a href={`#${item.id}`} className="group relative">
+                  <span className="relative z-10 font-bold tracking-wide text-foreground drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_2px_4px_rgba(255,255,255,0.3)] transition-all duration-300 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
+                    {item.name}
+                  </span>
                   <span className="uiverse-nav-hover-bg"></span>
                 </a>
               </li>
@@ -125,8 +174,14 @@ export default function Home() {
       <header suppressHydrationWarning className="relative z-10 min-h-screen flex items-center justify-center p-8 overflow-hidden">
         <div suppressHydrationWarning className="max-w-5xl w-full grid md:grid-cols-2 gap-12 items-center">
           {/* Left Side - Text */}
-          <div suppressHydrationWarning className="text-center md:text-left">
-            <div suppressHydrationWarning className="space-btn inline-block mb-6">
+          <motion.div 
+            variants={heroVariants}
+            initial="hidden"
+            animate="visible"
+            suppressHydrationWarning 
+            className="text-center md:text-left"
+          >
+            <motion.div variants={heroItemVariants} suppressHydrationWarning className="space-btn inline-block mb-6">
               <div className="space-btn-inner">
                 <strong>PROFESSIONAL PORTFOLIO</strong>
                 <div id="container-stars">
@@ -137,19 +192,19 @@ export default function Home() {
                   <div className="circle" />
                 </div>
               </div>
-            </div>
+            </motion.div>
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+            <motion.h1 variants={heroItemVariants} className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                 {resumeData.nameTH}
               </span>
-            </h1>
+            </motion.h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground font-medium leading-relaxed mb-8">
+            <motion.p variants={heroItemVariants} className="text-lg md:text-xl text-muted-foreground font-medium leading-relaxed mb-8">
               {resumeData.profile}
-            </p>
+            </motion.p>
             
-            <div suppressHydrationWarning className="flex flex-wrap gap-4 justify-center md:justify-start">
+            <motion.div variants={heroItemVariants} suppressHydrationWarning className="flex flex-wrap gap-4 justify-center md:justify-start">
               <button 
                 onClick={scrollToContact}
                 className="contact-btn"
@@ -165,22 +220,31 @@ export default function Home() {
                 <span className="now"><Download size={18} /></span>
                 <span className="play">ดาวน์โหลด CV</span>
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Side - Profile Image */}
-          <div suppressHydrationWarning className="relative">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
+            suppressHydrationWarning 
+            className="relative"
+          >
             <div suppressHydrationWarning className="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
               <div suppressHydrationWarning className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-full blur-3xl opacity-50" />
               <div suppressHydrationWarning className="relative w-full h-full">
-                <img 
+                <Image 
                   src="/profile.png" 
                   alt="Profile" 
-                  className="w-full h-full object-cover rounded-full border-4 border-white/30 shadow-2xl bg-white"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 256px, 320px"
+                  className="object-cover rounded-full border-4 border-white/30 shadow-2xl bg-white"
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Scroll Indicator */}
@@ -261,7 +325,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <Card className="group hover:-translate-y-2 transition-all duration-300 glass-card border-none">
+                <Card className="group hover:-translate-y-2 transition-all duration-300 glass-card border-none h-full">
                   <CardHeader>
                     <CardTitle className="text-xl group-hover:text-primary transition-colors flex items-center gap-3">
                       {skillIcons[skill.name] || <Code size={20} />}
@@ -285,8 +349,9 @@ export default function Home() {
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="glass-card p-8 rounded-[2rem] flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+                whileHover={{ scale: 1.02 }}
+                transition={{ delay: i * 0.15, type: "spring", stiffness: 300, damping: 24 }}
+                className="glass-card p-8 rounded-[2rem] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:shadow-xl transition-shadow cursor-default"
               >
                 <div>
                   <h3 className="text-xl font-bold text-primary">{edu.degree}</h3>

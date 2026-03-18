@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Send, Mail, User, MessageSquare, CheckCircle } from "lucide-react";
 
 interface ContactFormProps {
@@ -45,22 +45,39 @@ export default function ContactForm({ email = "Ntthartka1509@gmail.com" }: Conta
     }));
   };
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
       className="w-full max-w-xl mx-auto"
     >
       <form onSubmit={handleSubmit} className="glass-card space-y-6 p-8 rounded-3xl">
-        <div className="text-center mb-8">
+        <motion.div variants={itemVariants} className="text-center mb-8">
           <h3 className="text-2xl font-bold text-foreground mb-2">ส่งข้อความถึงฉัน</h3>
           <p className="text-muted-foreground text-sm">กรอกข้อมูลด้านล่างเพื่อติดต่อ</p>
-        </div>
+        </motion.div>
 
         {/* Name Input */}
-        <div className="uiverse-input-group">
+        <motion.div variants={itemVariants} className="uiverse-input-group">
           <label htmlFor="name" className="block text-sm font-medium mb-2 text-foreground">
             ชื่อ-นามสกุล
           </label>
@@ -77,10 +94,10 @@ export default function ContactForm({ email = "Ntthartka1509@gmail.com" }: Conta
               className="uiverse-input w-full pl-12 pr-4 py-4 rounded-xl"
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Email Input */}
-        <div className="uiverse-input-group">
+        <motion.div variants={itemVariants} className="uiverse-input-group">
           <label htmlFor="email" className="block text-sm font-medium mb-2 text-foreground">
             อีเมล
           </label>
@@ -97,10 +114,10 @@ export default function ContactForm({ email = "Ntthartka1509@gmail.com" }: Conta
               className="uiverse-input w-full pl-12 pr-4 py-4 rounded-xl"
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Message Textarea */}
-        <div className="uiverse-input-group">
+        <motion.div variants={itemVariants} className="uiverse-input-group">
           <label htmlFor="message" className="block text-sm font-medium mb-2 text-foreground">
             ข้อความ
           </label>
@@ -117,14 +134,16 @@ export default function ContactForm({ email = "Ntthartka1509@gmail.com" }: Conta
               className="uiverse-input w-full pl-12 pr-4 py-4 rounded-xl resize-none"
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* Submit Button */}
         <motion.button
           type="submit"
           disabled={isSubmitting}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          variants={itemVariants}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
           className={`uiverse-button w-full py-4 rounded-xl font-semibold text-white ${
             isSubmitting ? "opacity-70 cursor-not-allowed" : ""
           }`}
@@ -151,7 +170,7 @@ export default function ContactForm({ email = "Ntthartka1509@gmail.com" }: Conta
         </motion.button>
 
         {/* Alternative: Direct Email */}
-        <p className="text-center text-sm text-muted-foreground">
+        <motion.p variants={itemVariants} className="text-center text-sm text-muted-foreground">
           หรือ{" "}
           <a
             href={`mailto:${email}`}
@@ -159,7 +178,7 @@ export default function ContactForm({ email = "Ntthartka1509@gmail.com" }: Conta
           >
             ส่งอีเมลโดยตรง
           </a>
-        </p>
+        </motion.p>
       </form>
     </motion.div>
   );

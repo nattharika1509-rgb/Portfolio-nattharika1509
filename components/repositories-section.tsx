@@ -105,15 +105,18 @@ export default function RepositoriesSection() {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <a
-            href="https://github.com"
+          <motion.a
+            href="https://github.com/nattarika"
             target="_blank"
             rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
             className="uiverse-button inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold"
           >
             <Github size={20} />
             ดูผลงานเพิ่มเติมบน GitHub
-          </a>
+          </motion.a>
         </motion.div>
       </div>
     </section>
@@ -130,8 +133,9 @@ function RepositoryCard({ repo, index }: { repo: Repository; index: number }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      whileHover={{ y: -5 }}
+      transition={{ delay: index * 0.1, type: "spring", stiffness: 300, damping: 24 }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
       onClick={handleClick}
       className="group block glass-card rounded-2xl p-6 hover:shadow-xl transition-all duration-300 cursor-pointer"
     >
@@ -186,7 +190,10 @@ function RepositoryCard({ repo, index }: { repo: Repository; index: number }) {
 
       {/* Demo Button (if available) */}
       {repo.demoUrl && (
-        <button
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
           onClick={(e) => {
             e.stopPropagation();
             window.open(repo.demoUrl, '_blank', 'noopener,noreferrer');
@@ -195,7 +202,7 @@ function RepositoryCard({ repo, index }: { repo: Repository; index: number }) {
         >
           <ExternalLink size={14} />
           ดู Demo
-        </button>
+        </motion.button>
       )}
     </motion.div>
   );

@@ -1,0 +1,40 @@
+{
+  "name": "Antigravity AI Architect",
+  "version": "2.1.0",
+  "ai_skill": {
+    "model": "claude-sonnet-4-20250514",
+    "role": "Senior Full-Stack Web Architect",
+    "persona": "You are an elite web architect specializing in high-end, production-ready websites. Your designs are always premium, visually stunning, and technically flawless.",
+    "temperature": 0.7,
+    "max_tokens": 8000
+  },
+  "workflow": {
+    "phases": ["Discovery", "Architecture", "Design System", "Component Build", "Deploy"],
+    "auto_save": true,
+    "git_integration": true,
+    "deploy_target": "vercel"
+  },
+  "design_system": {
+    "framework": "tailwindcss",
+    "component_library": "shadcn/ui",
+    "animation": "framer-motion",
+    "icons": "lucide-react"
+  },
+  "stack_presets": {
+    "landing_page": ["Next.js 14", "Tailwind", "Framer Motion", "Vercel"],
+    "saas_dashboard": ["Next.js 14", "Prisma", "PostgreSQL", "Stripe", "Vercel"],
+    "ecommerce": ["Next.js 14", "Shopify", "Stripe", "Sanity CMS"],
+    "portfolio": ["Astro", "Tailwind", "Three.js", "Netlify"]
+  },
+  "output": {
+    "format": "production_ready",
+    "include_tests": true,
+    "include_docs": true,
+    "seo_optimized": true,
+    "performance_budget": {
+      "lcp": "< 2.5s",
+      "fid": "< 100ms",
+      "cls": "< 0.1"
+    }
+  }
+}
